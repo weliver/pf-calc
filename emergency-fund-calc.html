@@ -1,0 +1,71 @@
+<html xmlns=”http://www.w3.org/1999/xhtml”>
+<head>
+	<title>Form Testing</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../quizzes/css/style.css">
+	<style>
+	.chartSVG {
+		clear: both;
+		float: left;
+		margin-top: 10px;
+	}
+	#chart1 {
+		clear: both;
+		float: left;
+		margin-top: 10px;
+		width: 100%;
+		min-height: 100px;
+	}
+	</style>
+</head>
+<body>
+<div class="calculator">
+<div class="calc_wrapper">
+<h3>Enter your current expenses and savings:</h3>
+<form id="efInput">
+<div id="efCalcInput">
+<input class ="calc-input-text" type="text" placeholder = "Average Monthly Expenses" id="expenses">
+<h4 id='expensesfeedback'></h4>
+<br>
+<input class ="calc-input-text" type="text" placeholder = "Existing Liquid Savings (Not Retirement)" id="savings">
+<h4 id='savingsfeedback'></h4>
+</div>
+<div class="ef">
+<h3>How difficult would it be for you to replace your existing income?</h3>
+<div>
+<input class="radio" name="radio"type="radio" id="income1" value="1">
+<label for="income1">Very easy</label>
+</div>
+<div>
+<input class="radio" name="radio" type="radio" id="income2" value="2">
+<label for="income2">Somewhat easy; I&rsquo;m well qualified for many jobs and feel I could find one without much trouble.</label>
+</div>
+<div>
+<input class="radio" name="radio"type="radio" id="income3" value="3">
+<label for="income3">Somewhat difficult; Jobs in my field are limited and/or competitive.</label>
+</div>
+<div>
+<input class="radio" name="radio" type="radio" id="income4" value="4">
+<label for="income4">Very difficult; I lack the right skills for the job market or am in an industry in which it takes a long time to land a new position.</label>
+</div>
+
+<input class="calc-input-submit" type="submit" id="calc" value="Submit">
+<h4 class ='ef'id='submiterror'></h4>
+
+</div>					
+
+</form>
+</div>
+<div class="ef" id ="efund">
+</div>
+<div id="chart1">
+	<svg class="chartSVG" id="chart1"></svg>
+</div>
+
+
+</div>
+<div id="footer"></div>
+<script type="text/javascript" src="../quizzes/js/emergency-fund.js"></script>
+</body>
+</html>

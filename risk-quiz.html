@@ -1,0 +1,125 @@
+<html xmlns=”http://www.w3.org/1999/xhtml”>
+<head>
+	<title>Form Testing</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../quizzes/css/style.css">
+</head>
+<body>
+<div class="calculator">
+<div class="calc_wrapper">
+<form id="quiz">
+<div class="ef">
+<h3>Age</h3>	
+<div>
+<input class="calc-input-text"type="text" name="Age" id="q1age" placeholder="Age">
+</div>
+</div>
+<div class="ef">
+<div>
+<h4>I plan to retire (live off investments) in the next 10 years:</h4>
+<input class="radio"type="radio" name="q2" id="q2a"value=0>
+<label for="q2a">Yes</label>
+</div>
+<div>
+<input class="radio" type="radio" name="q2" id="q2b" value=1>
+<label for="q2b"> No</label>
+</div>
+</div>
+<div class="ef">
+<div>
+<h4>If given the choice, would you rather have:</h4>
+<input class="radio"type="radio" name="q3" id="q3a"value=0>
+<label for="q3a">A fixed, guaranteed salary.</label>
+</div>
+<div>
+<input class="radio"type="radio" name="q3" id="q3b"value=1>
+<label for="q3b">A smaller guaranteed salary with a bonus based on my company’s performance (which provides the chance to much more more in a good year).</label>
+</div>
+</div>
+<div class="ef">
+<div>
+<h4>I consider myself a risk-taker.</h4>
+<input class="radio"type="radio" name="q4" id="q4a" value=0>
+<label for="q4a">Yes</label>
+</div>
+<div>
+<input class="radio"type="radio" name="q4" id="q4b" value=1>
+<label for="q4b">No</label>
+</div>
+</div>
+<div class="ef">
+<div>
+<h4>Which do you value more?</h4>
+<input class="radio"type="radio" name="q5" id="q5a" value=0>
+<label for="q5a">Certainty</label>
+</div>
+<div>
+<input class="radio"type="radio" name="q5" id="q5b" value=1>
+<label for="q5b">Opportunity</label>
+</div>
+</div>
+<div class="ef">
+<div>
+<h4>Which makes you MORE uncomfortable:</h4>
+<input class="radio"type="radio" name="q6" id="q6a" value=0>
+<label for="q6a"> The idea of holding an investment that loses 20 percent of its value.</label>
+</div>
+<div>
+<input class="radio"type="radio" name="q6" id="q6b" value=1>
+<label for="q6b">The idea of missing out on an investment that doubled in value.</label>
+</div>
+</div>
+<div class="ef">
+<div>
+<h4>If the stock market has a bad month, I would be most tempted to:</h4>
+<input class="radio"type="radio" name="q7" id="q7a" value=0>
+<label for="q7a"> Sell my stocks and put my money in cash until things improve.</label>
+</div>
+<div>
+<input class="radio"type="radio" name="q7" id="q7b" value=1>
+<label for="q7b">Do nothing</label>
+</div>
+<div>
+<input class="radio"type="radio" name="q7" id="q7c" value=3>
+<label for="q7c">Use available cash to buy more stocks</label>
+</div>
+</div>
+<div class="ef">
+<div>
+<h4>Would you ever consider quitting your job to start your own business?</h4>
+<input class="radio"type="radio" name="q9" id="q9a" value=0>
+<label for="q9a">Yes</label>
+</div>
+<div>
+<input class="radio"type="radio" name="q9" id="q9b" value=1>
+<label for="q9b">No</label>
+</div>
+</div>
+<div class="ef">
+<div>
+<h4>Which word better describes you?</h4>
+<input class="radio"type="radio" name="q10" id="q10a" value=0>
+<label for="q10a">Cautious</label>
+</div>
+<div>
+<input class="radio"type="radio" name="q10" id="q10b" value=1>
+<label for="q10b">Daring</label>
+</div>
+</div>
+<input class="calc-input-submit" type="submit">
+</form>
+
+<div class="ef" id ="responses">
+<div><h4>Answer</h4></div>
+<div id="conservative" style="display:none"><h4>Conservative Ranking</h4></div>
+<div id="moderate" style="display:none"><h4>Moderate Ranking</h4></div>
+<div  id="aggresive" style="display:none"><h4>Aggressive Ranking</h4></div>
+<div  id="veryaggresive" style="display:none"><h4>Very Aggresive Ranking</h4></div>
+<div  id="error" style="display:none"><h4>Whoops, please select all the answers</h4></div>
+</div>	
+</div>
+</div>
+<div id="footer"></div>
+<script type="text/javascript" src="../quizzes/js/risk.js"></script>
+</body>
+</html>
