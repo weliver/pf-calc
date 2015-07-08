@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>HowdyApp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/calc.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.0/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-route.min.js"></script>
+    <script srce="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.1/angular-animate.js"></script>
+    <script src="./js/filters.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/d3.js"></script>
+    <script src="./js/d3directive.js"></script>
+    <script src="./js/d3controller.js"></script>
+  </head>
+
+
+<body ng-app="app">
+<div class="container" ng-controller="JamieController as user">
+  <div id="nav" class="row">
+  </div>
+ 
+  <div id="user-form" class="col-md-2">
+    <h4>User Info</h4>
+    <form >
+      <div class="form-group">
+              <label for="userIncome">Income</label>
+              <input type="text" class="form-control" id="userIncome" placeholder="Income" ng-model="user.income">
+      </div>
+      <div class="form-group">
+             <label for="userDebt">Debt</label>
+             <input type="text" class="form-control" id="userDebt" placeholder="Debt" ng-model="user.debt">
+      </div>
+      <button type="submit" class="btn btn-default" ng-click="update(user)">Calculate</button>
+    </form>
+  </div>
+  <div>
+  <div class="col-md-4" >
+    <d3-bars data="data" label="d3Label" on-click="onClick(item)"></d3-bars>
+    </div>
+  <div class="col-md-4">    <d3-circle data="data" label="d3Label" on-click="onClick(item)"></d3-circle>
+
+    </div>
+    </div>
+  </div>
+</div>
+
+  </body>
+</html>
