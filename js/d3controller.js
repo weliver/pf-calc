@@ -10,15 +10,22 @@ angular.module('app')
 	    };
 	    $scope.update = function(user){
 	    	$scope.data = [];
-			$scope.data.push({metric:'debt',val: user.debt});
-			$scope.data.push({metric:'income',val: user.income});
+			$scope.data.push({label:'income',value: user.income});
+			$scope.data.push({label:'debt',value: user.debt});
 			console.log($scope.data);
 			}
 	    $scope.data = [
-	    	{name:"Jim",val:0},
-	    	{name:"John",val:0}
+	    	{label:"Jim",value:500},
+	    	{label:"John",value:499}
 	    ];
-	}])
+	    $scope.accessor = function(d){ return d.value };
+		$scope.add = function(){ 
+    	$scope.data.push({ label: 'Victor', value: 100 })
+  		};
+  		$scope.remove = function(datum){
+    	$scope.data.splice(this.$index, 1);
+  			};
+		}])
 
 	.controller('UserCtrl', ['$scope', function($scope) {
 	$scope.master = {};

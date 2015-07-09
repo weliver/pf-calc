@@ -1,3 +1,20 @@
 #ratio span{
 	font-size: 3em;
 }
+/*Angular CSS*/
+donut-chart {
+  width: 100%;
+  top: 20%;
+  height: 100%;
+  min-height: 200px;
+  position: absolute;
+  pointer-events: none;
+}
+
+d3-bars{
+  width: 100%;
+  padding-top: 30%;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+}
