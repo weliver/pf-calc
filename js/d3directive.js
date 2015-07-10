@@ -176,6 +176,25 @@ angular.module('app', ['d3'])
 				}
 			);
 		}
+	}])
+	.directive('userInput', ['$timeout', 'd3Service', '$window', function($timeout, d3Service, $window) {
+		return {
+			restrict: 'E',
+			scope: {
+				data: '=',
+				onClick: '&',
+			},
+			controllerAs: 'input',
+			templateUrl: 'userInput.html',
+			link: function(scope, element, attr) {
+				console.log(scope.data);
+				scope.$watchCollection('data', function(newValue, oldValue){
+					$timeout(function() {
+						scope.$apply();
+					});
+				}, true);
+			}
+		}
 	}]);
 
 // 	.directive('d3Circle', ['d3Service','$window', function(d3Service, $window){
