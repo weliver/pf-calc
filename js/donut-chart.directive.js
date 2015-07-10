@@ -1,87 +1,97 @@
-// app.directive('donutChart', function() {
 
-//   return {
-//     scope: { // isolate scope
-//       'data': '=', 
-//       'onClick': '&',
-//       'accessor': '='
-//     },
-//     restrict: 'E',
-//     link: link
-//   };
+// angular.module('app', ['d3'])
+// 	.directive('donutChart', ['d3Service', '$window', function(d3Service, $window){
+// 		return {
+// 			restrict: 'E',
+// 			scope: {
+// 				data: '=',
+// 				onClick: '&',
+// 				accessor: '='
+// 			},
+// 			link: link
+// 			};
+// 		function link(scope, element) {
+// 			d3Service.d3().then(function(d3) {
+// 				console.log('scope.data', scope.data);
+// 				var color = d3.scale.category10();
+// 				var el = element[0];
+// 				var width = el.clientWidth;
+// 				var height = el.clientHeight;
+// 				console.log(width);
+// 				var min = Math.min(width, height);
+// 				var accessor = scope.accessor || Number;
+// 				console.log('accessor is ');
+// 				console.log(accessor);
+// 				var pie = d3.layout.pie().sort(null).value(accessor);
+// 				var arc = d3.svg.arc()
+// 					      .outerRadius(min / 2 * 0.9)
+// 					      .innerRadius(min / 2 * 0.5);
+// 				var svg = d3.select(el).append('svg')
+// 							.attr({width: '100%', height: '100%'})
+// 							.append('g')
+// 								.attr('transform', 'translate(' + width / 2 + ',' + height /2 + ')');
+// 				svg.on('mousedown', function(d) {
+// 					scope.$apply(function(){
+// 						if(scope.onClick) scope.onClick();
+// 					});
+// 				});
 
-//   function link(scope, element) {
-//     // the d3 bits
-//     console.log('scope.data', scope.data);
-//     var color = d3.scale.category10();
-//     var el = element[0];
-//     var width = el.clientWidth;
-//     var height = el.clientHeight;
-//     var min = Math.min(width, height);
-//     var accessor = scope.accessor || Number;
-//     var pie = d3.layout.pie().sort(null).value(accessor);
-//     var arc = d3.svg.arc()
-//       .outerRadius(min / 2 * 0.9)
-//       .innerRadius(min / 2 * 0.5);
+// 				// Store the displayed angles in _current.
+// 				// Then, interpolate from _current to the new angles.
+// 				// During the transition, _current is updated in-place by d3.interpolate.
+// 				function arcTween(a) {
+// 					console.log('a is:');
+// 					console.log(a);
+// 					console.log(this._current);
+// 					var i = d3.interpolate(this._current, a);
+// 					this._current = i(0);
+// 					console.log(i(0));
+// 					return function(t) {
+// 						return arc(i(t));
+// 					};
+// 				}
+				
 
-//     var svg = d3.select(el).append('svg')
-//       .attr({width: width, height: height})
-//       .append('g')
-//         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-    
-//     svg.on('mousedown', function(d) {
-//       // yo angular, the code in this callback might make a change to the scope!
-//       // so be sure to apply $watch's and catch errors.
-//       scope.$apply(function(){
-//         if(scope.onClick) scope.onClick();
-//       });
-//     });
+// 				var arcs = svg.selectAll('path.arc').data(pie(scope.data))
+// 				    .enter().append('path')
+// 				    .attr('class', 'arc')
+// 				    .style('stroke', 'white')
+// 				    .attr('fill', function(d, i) { return color(i) })
+// 				    // store the initial angles
+// 				    .each(function(d) { return this._current = d });
 
-//     function arcTween(a) {
-//       // see: http://bl.ocks.org/mbostock/1346410
-//       var i = d3.interpolate(this._current, a);
-//       this._current = i(0);
-//       return function(t) {
-//         return arc(i(t));
-//       };
-//     }
-    
-//     // add the <path>s for each arc slice
-//     var arcs = svg.selectAll('path.arc').data(pie(scope.data))
-//       .enter().append('path')
-//         .attr('class', 'arc')
-//         .style('stroke', 'white')
-//         .attr('fill', function(d, i) { return color(i) })
-//         // store the initial angles
-//         .each(function(d) { return this._current = d });
-    
-//     // our data changed! update the arcs, adding, updating, or removing 
-//     // elements as needed
-//     scope.$watch('data', function(newData, oldData){
-//       console.log('data changed!');
-//       var data = newData.slice(0); // copy
-//       var duration = 500;
-//       var PI = Math.PI;
-//       while(data.length < oldData.length) data.push(0);
-//       arcs = svg.selectAll('.arc').data(pie(data));
-//       arcs.transition().duration(duration).attrTween('d', arcTween);
-//       // transition in any new slices
-//       arcs.enter().append('path')
-//         .style('stroke', 'white')
-//         .attr('class', 'arc')
-//         .attr('fill', function(d, i){ return color(i) })
-//         .each(function(d) {
-//           this._current = { startAngle: 2 * PI - 0.001, endAngle: 2 * PI }
-//         })
-//         .transition().duration(duration).attrTween('d', arcTween);
-//       // transition out any slices with size = 0
-//       arcs.filter(function(d){ return d.data === 0 })
-//         .transition()
-//         .duration(duration)
-//         .each(function(d){ d.startAngle = 2 * PI - 0.001; d.endAngle = 2 * PI; })
-//         .attrTween('d', arcTween).remove();
-//     // IMPORTANT! the third argument, `true`, tells angular to watch for 
-//     // changes to array elements.
-//     }, true);
-//   }
-// });
+// 				scope.$watch('data', function(newData, oldData) {
+// 					console.log('data changed, rendering new chart');
+// 					// var data = newData.map(function(x,y,z){
+// 					// 			return x.val;
+// 					// });
+// 					var data = newData.slice(0);
+// 					console.log('newData is:')
+// 					console.log(data);
+// 					var duration = 500;
+// 					var PI = Math.PI;
+// 					console.log('PI is:');
+// 					console.log(PI);
+// 					while(data.length < oldData.length) data.push(0);
+// 					arcs = svg.selectAll('.arc').data(pie(newData));
+
+// 					arcs.transition().duration(duration).attrTween('d', arcTween);
+// 					arcs.enter().append('path')
+// 						.style('stroke', 'white')
+// 						.attr('class', 'arc')
+// 						.attr('fill', function(d, i ) {return color(i)})
+// 						.each(function(d) {
+// 							this._current = { startAngle: 6, endAngle: 6 } })
+// 							.transition().duration(duration).attrTween('d', arcTween);
+// 					arcs.filter(function(d) {return d.data === 0})
+// 						.transition()
+// 						.duration(duration)
+// 						.each(function(d){ d.startAngle = 2 * PI - 0.001; d.endAngle = 2 * PI; })
+// 						.attrTween('d', arcTween).remove();
+// 						}, true);
+					
+
+// 				}
+// 			);
+// 		}
+// 	}]);

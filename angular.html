@@ -11,18 +11,21 @@
     <script src="./js/d3.js"></script>
     <script src="./js/d3directive.js"></script>
     <script src="./js/d3controller.js"></script>
+    <script src="./js/userData.controller.js"></script>
+
     <script src="./js/donut-chart.directive.js"></script>
 
   </head>
 
 
 <body ng-app="app">
-<div class="container" ng-controller="JamieController as user">
+<div class="container">
 
- 
-  <div id="user-form" class="col-md-2">
-    <h4>Data Imager</h4>
-    <form >
+ <div class="row" ng-controller="JamieController">
+  <h4>Fixed Labels</h4>
+  <div class="col-md-2 user-form">
+
+    <form>
       <div class="form-group">
               <label for="userIncome">Data 1</label>
               <input type="text" class="form-control" id="userIncome" placeholder="Income" ng-model="user.income">
@@ -34,8 +37,8 @@
       <button type="submit" class="btn btn-default" ng-click="update(user)">Calculate</button>
     </form>
   </div>
-  <div>
-  <div class="col-md-4" style="padding-top:75px" width="100%" height="100%">
+  <div class="data-viz">
+  <div class="col-md-4"  width="100%" height="100%">
     <donut-chart data="data" accessor="accessor" label="d3Label" on-click="onClick(item)"></donut-chart>
     </div>
   <div class="col-md-4">    <d3-bars data="data" label="d3Label" on-click="onClick(item)"></d3-bars>
@@ -43,7 +46,26 @@
     </div>
     </div>
   </div>
-</div>
+  <div class="row" ng-controller="inputController as input">
+  <h4>Custom Labels</h4>
+  <div class="col-md-2 user-form">
+    <form>
+      <div class="form-group">
+              <label for="userIncome">Input Label</label>
+              <input type="text" class="form-control" placeholder="Label" ng-model="input.label">
+      </div>
+      <div class="form-group">
+             <label for="userDebt">Input Value</label>
+             <input type="text" class="form-control" placeholder="Value" ng-model="input.value">
+      </div>
+      <button type="submit" class="btn btn-default" ng-click="update(input)">Calculate</button>
+    </form>
+
+    </div> 
+    <div class="col-md-2"><h5>{{input.label}}</h5><p>{{input.value}}</p></div> 
+  </div>
+</div>  
+
 
   </body>
 </html>

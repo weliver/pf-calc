@@ -9,7 +9,7 @@ angular.module('app', ['d3'])
 		link: function(scope, element, attrs) {
 			d3Service.d3().then(function(d3){
 
-				var	margin = parseInt(attrs.margin) || 20,
+				var	margin = parseInt(attrs.margin) || 10,
     			    barHeight = parseInt(attrs.barHeight) || 25,
           			barPadding = parseInt(attrs.barPadding) || 5;
 
@@ -90,7 +90,8 @@ angular.module('app', ['d3'])
 			scope: {
 				data: '=',
 				onClick: '&',
-				accessor: '='
+				accessor: '=',
+				labels: '='
 			},
 			link: link
 			};
@@ -104,7 +105,7 @@ angular.module('app', ['d3'])
 				console.log(width);
 				var min = Math.min(width, height);
 				var accessor = scope.accessor || Number;
-				console.log('accessor is ' + accessor);
+				var labels = scope.labels;
 				var pie = d3.layout.pie().sort(null).value(accessor);
 				var arc = d3.svg.arc()
 					      .outerRadius(min / 2 * 0.9)
@@ -153,8 +154,6 @@ angular.module('app', ['d3'])
 					console.log(data);
 					var duration = 500;
 					var PI = Math.PI;
-					console.log('PI is:');
-					console.log(PI);
 					while(data.length < oldData.length) data.push(0);
 					arcs = svg.selectAll('.arc').data(pie(newData));
 

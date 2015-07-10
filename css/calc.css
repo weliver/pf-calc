@@ -13,8 +13,25 @@ donut-chart {
 
 d3-bars{
   width: 100%;
-  padding-top: 30%;
+  padding-top: 25%;
   height: 100%;
   position: absolute;
   pointer-events: none;
 }
+
+/*.container {
+	background-color: #dddfd4;
+}
+.row {
+	background: #0288D1;
+	border: solid 1px white;
+	border-radius: 10px;
+	margin: 20px;
+}
+.data-viz{
+	background-color: white;
+}
+.user-form {
+	background-color: #03A9F4;
+	border-right: 3px solid #3fb0ac;
+}*/
