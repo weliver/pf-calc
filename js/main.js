@@ -1,4 +1,4 @@
-var app = angular.module('app', ['inputController','ngRoute', 'percentage', 'd3']);
+var app = angular.module('app', ['inputController','ngRoute', 'percentage', 'd3', 'userInputService']);
 
 app.filter('percentage', ['$window', function ($window) {
         return function (input, decimals, suffix) {

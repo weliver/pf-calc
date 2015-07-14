@@ -12,7 +12,7 @@
     <script src="./js/d3directive.js"></script>
     <script src="./js/d3controller.js"></script>
     <script src="./js/userData.controller.js"></script>
-
+    <script src="./js/userInput.service.js"></script>
     <script src="./js/donut-chart.directive.js"></script>
 
   </head>
@@ -47,9 +47,15 @@
     </div>
   </div>
 
-   <user-input data="data" ng-controller="inputController as input"></user-input>
-</div>  
+   <user-input data="data" ng-controller="inputController as input">
+     
+   </user-input>
 
+</div>  
+  <div class="col-md-8">
+    <user-graph></user-graph>
+
+  </div>
 
   </body>
 </html>

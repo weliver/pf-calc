@@ -84,7 +84,7 @@ angular.module('app', ['d3'])
 		}
 	};
 }])
-	.directive('donutChart', ['d3Service', '$window', function(d3Service, $window){
+	.directive('donutChart', ['d3Service', '$window', 'userInputService', function(d3Service, $window, userInputService){
 		return {
 			restrict: 'E',
 			scope: {
@@ -96,6 +96,7 @@ angular.module('app', ['d3'])
 			link: link
 			};
 		function link(scope, element) {
+			
 			d3Service.d3().then(function(d3) {
 				console.log('scope.data', scope.data);
 				var color = d3.scale.category10();
@@ -177,17 +178,22 @@ angular.module('app', ['d3'])
 			);
 		}
 	}])
-	.directive('userInput', ['$timeout', 'd3Service', '$window', function($timeout, d3Service, $window) {
+	.directive('userInput', ['$timeout', 'd3Service', '$window','userInputService', function($timeout, d3Service, $window, userInputService) {
 		return {
 			restrict: 'E',
 			scope: {
 				data: '=',
-				onClick: '&',
+				onClick: '&'
 			},
 			controllerAs: 'input',
 			templateUrl: 'userInput.html',
 			link: function(scope, element, attr) {
-				console.log(scope.data);
+				scope.updateInput = function(d){
+					userInputService.update(d);
+				};
+				scope.remove = function(d) {
+					userInputService.remove(d);
+				}
 				scope.$watchCollection('data', function(newValue, oldValue){
 					$timeout(function() {
 						scope.$apply();
@@ -195,6 +201,46 @@ angular.module('app', ['d3'])
 				}, true);
 			}
 		}
+	}])
+	.directive('userGraph', ['d3Service', '$window', 'userInputService', function(d3Service, $window, userInputService) {
+		return {
+			restrict: 'E',
+			scope: {
+				data : '=',
+				onClick: '&'
+			},
+			controller: 'graphController',
+			link: link
+		}
+		function link(scope, element, attr) {
+			d3Service.d3().then(function(d3){
+				el = element[0],
+				width = 800,
+				height = el.clientHeight;
+				var newData = function(){
+					var data = scope.data;
+					var dataset = [];
+					var length = data.length;
+					for (var i = 0; i < length; i++){
+						dataset.push(parseInt(data[i].value));
+					}
+					return dataset;
+				}
+				var data = newData();
+				console.log('scope data is:')
+				console.log(data);
+				var svg = d3.select(el)
+					.append('svg');
+				var scale = d3.scale.linear()
+					.domain([0, d3.max(data)])
+					.range([10, d3.max(data)]);
+				var axis = d3.svg.axis()
+					.scale(scale);
+				svg.call(axis);
+
+			})
+		}
+
 	}]);
 
 // 	.directive('d3Circle', ['d3Service','$window', function(d3Service, $window){
