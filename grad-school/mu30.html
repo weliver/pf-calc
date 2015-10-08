@@ -1,0 +1,891 @@
+	<style>
+	
+	table.compare th {
+		border: none;
+	    background: white;
+	    font-size: 1.3em;
+	    padding: 15px 0 5px;
+	}
+	.chartCell {
+		background: white;
+	}
+	.advUnselect:after {
+		content: " \25bc";
+	}
+	.advSelect:before {
+		content: 'Hide ';
+	}
+	.advSelect:after {
+		content: " \25b2";
+	}
+	#toggleAdvanced:after {
+		text-align: right;
+	}
+	#toggleAdvanced:active {
+
+	}
+	#toggleAdvanced:hover {
+		cursor: pointer;
+	}
+	.advancedOption {
+		display: none;
+	}
+	.box {
+    width: 200px;
+    height: 200px;
+    margin: 40px;
+    float: left;
+    text-align: center;
+    border: #969696 solid thin;
+    padding: 5px;
+}
+
+.red {
+    background-color: #e9967a;
+    color: #f0f8ff;
+}
+
+.blue {
+    background-color: #add8e6;
+    color: #f0f8ff;
+}
+
+.cell {
+    min-width: 40px;
+    min-height: 20px;
+    margin: 5px;
+    float: left;
+    text-align: center;
+    border: #969696 solid thin;
+    padding: 5px;
+}
+
+.fixed-cell {
+    min-width: 40px;
+    min-height: 20px;
+    margin: 5px;
+    position: fixed;
+    text-align: center;
+    border: #969696 solid thin;
+    padding: 5px;
+}
+
+.h-bar {
+    min-height: 15px;
+    min-width: 10px;
+    background-color: steelblue;
+    margin-bottom: 2px;
+    font-size: 11px;
+    color: #f0f8ff;
+    text-align: right;
+    padding-right: 2px;
+}
+
+.v-bar {
+    min-height: 1px;
+    min-width: 30px;
+    background-color: #4682b4;
+    margin-right: 2px;
+    font-size: 10px;
+    color: #f0f8ff;
+    text-align: center;
+    width: 10px;
+    display: inline-block;
+}
+
+.baseline {
+    height: 1px;
+    background-color: black;
+}
+
+.clear {
+    clear: both;
+}
+
+.selected {
+    background-color: #f08080;
+}
+
+.control-group {
+    padding-top: 10px;
+    margin: 10px;
+}
+
+.table {
+    width: 70%;
+}
+
+.table td, th {
+    padding: 5px;
+}
+
+.table-header {
+    background-color: #00AFEF;
+    font-weight: bold;
+}
+
+.table-row-odd {
+    background-color: #f0f8ff;
+}
+
+.table-row-odd {
+    background-color: #d3d3d3;
+}
+
+.code {
+    display: inline-block;
+    font-style: italic;
+    background-color: #d3d3d3;
+    border: #969696 solid thin;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.countdown{
+    width: 150px;
+    height: 150px;
+    font-size: 5em;
+    font-weight: bold;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font: 10px sans-serif;
+}
+
+.axis .grid-line{
+    stroke: black;
+    shape-rendering: crispEdges;
+    stroke-opacity: .2;
+}
+
+.line{
+    fill: none;    
+    stroke: steelblue;
+    stroke-width: 2;
+}
+
+.dot {
+  fill: #fff;
+  stroke: steelblue;
+}
+
+.area {
+    stroke: none;
+    fill: steelblue;
+    fill-opacity: .2;
+}
+
+.pie text{
+    fill: white;
+    font-weight: bold;
+}
+
+.circle {
+    stroke: none;
+    fill: red;
+    fill-opacity: .7;
+}
+
+.cross {
+    stroke: none;
+    fill: blue;
+    fill-opacity: .7;
+}
+
+.diamond {
+    stroke: none;
+    fill: green;
+    fill-opacity: .7;
+}
+
+.square{
+    stroke: none;
+    fill: yellow;
+    fill-opacity: .7;
+}
+
+.triangle-down{
+    stroke: none;
+    fill: blueviolet;
+    fill-opacity: .7;
+}
+
+.triangle-up{
+    stroke: none;
+    fill: darkred;
+    fill-opacity: .7;
+}
+
+.bubble{
+    fill-opacity: .3;
+}
+
+.bar{
+    stroke: none;
+    fill: steelblue;
+}
+
+	</style>
+	<div id="gradCalc">
+		<div id="mbc_full_form">
+			<form name="mu30DebtRatioCalc">
+				<fieldset>
+					<legend>Grad School ROI</legend>
+					<ol style="list-style:none">
+						<li class="dollar">
+							<label for="currentIncome">Current Salary</label>
+							<span class="dollar">$</span>
+							<input id="currentIncome" class="calcEntry" name="currentIncome" value="35000">
+						</li>
+						<li class="dollar">
+							<label for="gradTuition">Cost of Graduate School and Living Expenses</label>
+							<span class="dollar">$</span>
+							<input id="gradTuition" class="calcEntry" name="gradTuition" value="40000">
+						</li>
+						<li >
+							<label for="gradYears">Length of Graduate School Program (Years)</label>
+							<input id="gradYears" class="calcEntry" name="gradYears" value="2">
+						</li>
+						<li class="dollar">
+							<label for="loanTotal">Total Amount of Student Loans</label>
+							<span class="dollar">$</span>
+							<input id="loanTotal" class="calcEntry" name="loanTotal" value="15000">
+						</li>
+						<li class="perc advancedOption">
+								<label for="loanAPR">Student Loan APR (%)</label>
+								<span class="perc">%</span>
+								<input id="loanAPR" class="calcEntry" name="loanAPR" value="0">
+							</li>
+						<li class="advancedOption">
+								<label for="loanTerm">Student Loan Term (Years)</label>
+								<input id="loanTerm" class="calcEntry" name="loanTerm" value="0">
+							</li>
+						</li>
+						<li>
+							<label></label>
+							<span id="toggleAdvanced" class="advUnselect">Advanced</span>
+						</li>
+						<li class="dollar">
+							<label for="expectedIncome">Expected Salary with Graduate Degree</label>
+							<span class="dollar">$</span>
+							<input id="expectedIncome" class="calcEntry" name="expectedIncome" value="75000">
+						</li>
+						<li>
+							<label for="ageCurrent">Current Age</label>
+							<input id="ageCurrent" class="calcEntry" name="ageCurrent" value="26">
+						</li>
+					</ol>
+					<div id="formError" style="display:none">Please check your input.</div>
+				</fieldset>
+				
+				<fieldset class="buttons">
+					<input type="submit" name="wid_submit" class="wid_submit mortgage-btn" value="Calculate">
+				</fieldset>
+			</form>
+
+		</div>
+
+		<div style="display:none" id="output">
+			<table class="compare">
+				<th>Cost of School</th>
+				<tbody id="costTable">
+				</tbody>
+				
+				<tbody>
+					<th>Salary Over Time</th>
+					<tr>
+					<td class="salChart chartCell"></td>
+					</tr>
+				</tbody>
+				<th>Lifetime Earnings</th>
+				<tbody id="earningsTable">
+				</tbody>
+				<tbody>
+					<th>Earnings Over Time</th>
+					<tr>
+					<td class="earningsChart chartCell"> </td>
+					</tr>
+				</tbody>
+				<th>Degree Value</th>
+				<tbody id="returnTable">
+				</tbody>
+			</table>
+		</div>
+	</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+//jQuery functions
+
+(function(loadIt){
+
+	$('#gradCalc').on('submit', function(e) {
+		e.preventDefault();
+	
+		var data = {
+			currentIncome : $('#currentIncome').val(),
+			ageCurrent : $('#ageCurrent').val(),
+			expectedIncome : $('#expectedIncome').val(),
+			lostIncome : $('#lostIncome').val(),
+			gradTuition : $('#gradTuition').val(), //this currently includes living expenses
+			gradYears : $('#gradYears').val(),
+			loanTotal : $('#loanTotal').val(),
+			loanAPR : $('#loanAPR').val(),
+			loanTerm: $('#loanTerm').val(),
+			ageCurrent : $('#ageCurrent').val(),			
+		}
+		printOutput(data);
+	});
+
+	$('#toggleAdvanced').on('click', function(e) {
+		e.preventDefault();	
+		
+		$('#toggleAdvanced').toggleClass('advSelect advUnselect');
+
+		$('.advancedOption').toggle();
+	});
+
+	function printOutput(data) {
+
+		var lifeEarningsCurrent = gradROI.lifetimeEarningsCurrent(data),
+			lifeEarningsExpected = gradROI.lifetimeEarningsExpected(data),
+			returnRate = gradROI.returnRate(data),
+			loanCost = gradROI.loanCost(data);
+
+		var ageOfReturn = gradROI.ageOfReturn(data);
+
+
+		$('#salChart').remove();
+		var salaryChart = new MU30Chart.graph([lifeEarningsCurrent.annual, lifeEarningsExpected.annual], 'age', 'salary', 'salChart');
+		
+		$('#earningsChart').remove();
+		var earningsChart = new MU30Chart.graph([lifeEarningsCurrent.annual, lifeEarningsExpected.annual], 'age', 'lifeEarnings', 'earningsChart');
+
+
+		$('#output').show();
+
+		$('#earningsTable').empty()
+			.append(
+			"<tr><td>Current Salary</td><td>$"+(lifeEarningsCurrent.totalEarnings).formatMoney(0)+"</td></tr>"
+			)
+			.append(
+			"<tr><td>New Salary</td><td>$"+(lifeEarningsExpected.totalEarnings).formatMoney(0)+"</td></tr>"
+		);
+		$('#costTable').empty()
+			.append(
+			"<tr><td>Potential Income</td><td>$"+(Number(data.currentIncome)*Number(data.gradYears)).formatMoney(0)+"</td></tr>"
+			)
+			.append(
+			"<tr><td>Tuition and Living Expenses</td><td>$"+(Number(data.gradTuition)-loanCost).formatMoney(0)+"</td></tr>"
+			)
+			.append(
+			"<tr><td>Student Loans</td><td>$"+loanCost.formatMoney(0)+"</td></tr>"
+		);
+		$('#returnTable').empty();
+		if (typeof ageOfReturn != 'undefined'){
+			$('#returnTable').append(
+				"<tr><td>Age when earnings exceed current projection</td><td>"+ageOfReturn+"</td></tr>"
+			);
+		}
+		$('#returnTable').append(
+			"<tr><td>Rate of Return</td><td>"+(Math.floor(returnRate)+'%')+"</td></tr>"
+		);
+
+	}
+
+})();
+
+//Format numbers to US currency standard
+Number.prototype.formatMoney = function(c, d, t){
+var n = this, 
+    c = isNaN(c = Math.abs(c)) ? 2 : c, 
+    d = d == undefined ? "." : d, 
+    t = t == undefined ? "," : t, 
+    s = n < 0 ? "-" : "", 
+    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", 
+    j = (j = i.length) > 3 ? j % 3 : 0;
+   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+ };
+
+//grad school ROI calculator
+var gradROI = (function() {
+
+
+	function lifetimeEarnings(age, startingSalary, annualGrowth, retirement, debt) {
+		if (typeof debt == 'undefined') { var debt = 0}
+			else { var debt = Number(debt);}
+		if ( age && startingSalary) {
+			
+			var annualGrowth = annualGrowth || 3;
+			var retirement = retirement || 70;
+			
+
+			var i,
+				length = retirement - age,
+				salary = parseInt(startingSalary),
+				rate = annualGrowth / 100,
+				careerWealth = {};
+
+			careerWealth.totalEarnings = 0 - debt;
+			careerWealth.annual = [];
+		
+			for (i = 0; i < length; i++) {
+
+				var curYear = {};
+				curYear.year = i;
+				curYear.age = i+parseInt(age);
+				if (i == 0) {
+					careerWealth.totalEarnings = careerWealth.totalEarnings + salary;
+					curYear.lifeEarnings = careerWealth.totalEarnings;
+					curYear.salary = salary;
+				} else {
+					careerWealth.totalEarnings += parseInt(salary);
+					curYear.lifeEarnings = careerWealth.totalEarnings;
+					salary = salary + (salary * rate);
+					curYear.salary = salary;
+				}
+				careerWealth.annual.push(curYear);
+			}
+			return careerWealth;
+		} else {
+			console.log('lifetimeEarnings needs age, startingSalary', startingSalary, startingSalary);
+			return null;
+		}
+	}
+
+	function returnRate(finalValue, initialValue, age, retirement) {
+		var retirement = retirement || 70;
+
+		var time = retirement - age;
+		var diff = finalValue - initialValue;
+		return (diff/time) / 100;
+
+	}
+
+	/*Roll your own number convertor from notation*/
+	function toFixed(x) {
+	  if (Math.abs(x) < 1.0) {
+	    var e = parseInt(x.toString().split('e-')[1]);
+	    if (e) {
+	        x *= Math.pow(10,e-1);
+	        x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
+	    }
+	  } else {
+	    var e = parseInt(x.toString().split('+')[1]);
+	    if (e > 20) {
+	        e -= 20;
+	        x /= Math.pow(10,e);
+	        x += (new Array(e+1)).join('0');
+	    }
+	  }
+	  return x;
+	}
+	/*Decimal Rounding */
+	(function() {
+	  /**
+	   * Decimal adjustment of a number.
+	   *
+	   * @param {String}  type  The type of adjustment.
+	   * @param {Number}  value The number.
+	   * @param {Integer} exp   The exponent (the 10 logarithm of the adjustment base).
+	   * @returns {Number} The adjusted value.
+	   */
+		  function decimalAdjust(type, value, exp) {
+		    // If the exp is undefined or zero...
+		    if (typeof exp === 'undefined' || +exp === 0) {
+		      return Math[type](value);
+		    }
+		    value = +value;
+		    exp = +exp;
+		    // If the value is not a number or the exp is not an integer...
+		    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+		      return NaN;
+		    }
+		    // Shift
+		    value = value.toString().split('e');
+		    value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+		    // Shift back
+		    value = value.toString().split('e');
+		    return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+		  }
+
+		  // Decimal round
+		  if (!Math.round10) {
+		    Math.round10 = function(value, exp) {
+		      return decimalAdjust('round', value, exp);
+		    };
+		  }
+		  // Decimal floor
+		  if (!Math.floor10) {
+		    Math.floor10 = function(value, exp) {
+		      return decimalAdjust('floor', value, exp);
+		    };
+		  }
+		  // Decimal ceil
+		  if (!Math.ceil10) {
+		    Math.ceil10 = function(value, exp) {
+		      return decimalAdjust('ceil', value, exp);
+		    };
+		  }
+		})();
+
+	function loanCost(amount, apr, term, format) {
+		var amount = Number(amount),
+			apr = Number(apr)/100,
+			term = Number(term),
+			compoundRate = 1,
+			rate = apr / compoundRate,
+			months,
+			years;
+
+		if (format == 'months') {
+			months = term;
+			years = months/12;
+		} else if (format == 'years') {
+			years = term;
+			months = term*12;
+		} else {
+			console.log('loanCost expects format to be months or years');
+		}
+	
+		if (months > 0) {
+			var interestRate = Math.pow((rate+1), years);
+			var totalCompounded = Math.round10((amount * interestRate), 1);
+			var annualPayments = totalCompounded/years;
+			return annualPayments;
+		} else {
+			return amount;
+		}
+	}
+	function ageOfReturn(current, future, programLength) {
+		var current = current.annual,
+			future = future.annual,
+			gradYears = parseInt(programLength),
+			ageOfReturn;
+
+		for (var i = 0; i<current.length; i++) {
+			if (typeof future[i] != 'undefined') {
+				var a = future[i].lifeEarnings;
+			}
+			if (typeof current[i+gradYears] !='undefined'){
+				var b = current[i+gradYears].lifeEarnings;
+			}
+			if (a > b){
+				ageOfReturn = future[i].age;
+				break;
+			} 
+				
+		}
+		return ageOfReturn;
+		
+	}
+
+	return {
+		lifetimeEarningsCurrent : function(data) {
+			return lifetimeEarnings(data.ageCurrent, data.currentIncome, data.salRate, data.ageRetirement);
+			}
+		,
+		lifetimeEarningsExpected : function(data) {
+			var lostIncome = parseInt(data.gradYears * data.currentIncome);
+			var age = parseInt(data.ageCurrent) + parseInt(data.gradYears);
+			var debt = loanCost(data.loanTotal, data.loanAPR, data.loanTerm, 'years') + lostIncome;
+			return lifetimeEarnings(age, data.expectedIncome, data.salRate, data.ageRetirement, debt);
+			}
+		,
+		returnRate: function(data) {
+			var lostIncome = parseInt(data.gradYears * data.currentIncome);
+			var ageAfterGrad = parseInt(data.ageCurrent) + parseInt(data.gradYears);
+			var debt = lostIncome + loanCost(data.loanTotal, data.loanAPR, data.loanTerm, 'years') * data.loanTerm;
+			var earningsCurrent = lifetimeEarnings(data.ageCurrent, data.currentIncome);
+			var earningsExpected = lifetimeEarnings(ageAfterGrad, data.expectedIncome, 3, 70, debt);
+			var earningsDiff = earningsExpected.totalEarnings - earningsCurrent.totalEarnings;
+			return returnRate(earningsDiff, data.gradTuition, data.ageCurrent);
+			}
+		,
+		loanCost: function(data) {
+			if (data.loanTerm > 0 ){
+				return loanCost(data.loanTotal, data.loanAPR, data.loanTerm, 'years')*data.loanTerm;
+			} else {
+				return Number(data.loanTotal);
+			}
+		},
+		ageOfReturn: function(data) {
+			var lostIncome = parseInt(data.gradYears * data.currentIncome);
+			var debt = lostIncome + loanCost(data.loanTotal, data.loanAPR, data.loanTerm, 'years') * data.loanTerm;
+			var ageAfterGrad = parseInt(data.ageCurrent) + parseInt(data.gradYears);
+			var earningsCurrent = lifetimeEarnings(data.ageCurrent, data.currentIncome);
+			var earningsExpected = lifetimeEarnings(ageAfterGrad, data.expectedIncome, 3, 70, debt);
+			return ageOfReturn(earningsCurrent, earningsExpected, data.gradYears);
+		}
+	}
+
+})();
+
+
+var MU30Chart = (function() {
+ 
+	function lineChart() { // <-1A
+	    var _chart = {};
+	    var _width = 600, _height = 300, // <-1B
+	            _margins = {top: 30, left: 60, right: 30, bottom: 30},
+	            _x, _y,
+	            _data = [],
+	            _colors = d3.scale.category10(),
+	            _svg,
+	            _bodyG,
+	            _line;
+	    _chart.render = function (id) { // <-2A
+	        if (!_svg) {
+	        	_svg = d3.select('.'+id).append("svg") // <-2B
+	                    .attr("height", _height)
+	                    .attr("width", _width)
+	                    .attr('id', id);
+	            renderAxes(_svg);
+	            defineBodyClip(_svg);
+	        }
+	        renderBody(_svg);
+	    };
+	    function renderAxes(svg) {
+	        var axesG = svg.append("g")
+	                .attr("class", "axes");
+	        renderXAxis(axesG);
+	        renderYAxis(axesG);
+	    }
+	    
+	    function renderXAxis(axesG){
+	        var xAxis = d3.svg.axis()
+	                .scale(_x.range([0, quadrantWidth()]))
+	                .orient("bottom");        
+	        axesG.append("g")
+	                .attr("class", "x axis")
+	                .attr("transform", function () {
+	                    return "translate(" + xStart() + "," + yStart() + ")";
+	                })
+	                .call(xAxis);
+	                
+	        d3.selectAll("g.x g.tick")
+	            .append("line")
+	                .classed("grid-line", true)
+	                .attr("x1", 0)
+	                .attr("y1", 0)
+	                .attr("x2", 0)
+	                .attr("y2", - quadrantHeight());
+	    }
+	    
+	    function renderYAxis(axesG){
+	        var yAxis = d3.svg.axis()
+	                .scale(_y.range([quadrantHeight(), 0]))
+	                .orient("left");
+	                
+	        axesG.append("g")
+	                .attr("class", "y axis")
+	                .attr("transform", function () {
+	                    return "translate(" + xStart() + "," + yEnd() + ")";
+	                })
+	                .call(yAxis);
+	                
+	         d3.selectAll("g.y g.tick")
+	            .append("line")
+	                .classed("grid-line", true)
+	                .attr("x1", 0)
+	                .attr("y1", 0)
+	                .attr("x2", quadrantWidth())
+	                .attr("y2", 0);
+	    }
+	    function defineBodyClip(svg) { // <-2C
+	        var padding = 5;
+	        svg.append("defs")
+	                .append("clipPath")
+	                .attr("id", "body-clip")
+	                .append("rect")
+	                .attr("x", 0 - padding)
+	                .attr("y", 0)
+	                .attr("width", quadrantWidth() + 2 * padding)
+	                .attr("height", quadrantHeight());
+	    }
+	    function renderBody(svg) { // <-2D
+	        if (!_bodyG)
+	            _bodyG = svg.append("g")
+	                    .attr("class", "body")
+	                    .attr("transform", "translate(" 
+	                        + xStart() + "," 
+	                        + yEnd() + ")") // <-2E
+	                    .attr("clip-path", "url(#body-clip)");        
+	        renderLines();
+	        renderDots();
+	    }
+	    function renderLines() {
+	        _line = d3.svg.line() //<-4A
+	                        .x(function (d) { return _x(d.x); })
+	                        .y(function (d) { return _y(d.y); });
+	                        
+	        _bodyG.selectAll("path.line")
+	                    .data(_data)
+	                .enter() //<-4B
+	                .append("path")                
+	                .style("stroke", function (d, i) { 
+	                    return _colors(i); //<-4C
+	                })
+	                .attr("class", "line");
+	        _bodyG.selectAll("path.line")
+	                .data(_data)
+	                .transition() //<-4D
+	                .attr("d", function (d) { return _line(d); });
+	    }
+	    function renderDots() {
+	        _data.forEach(function (list, i) {
+	            _bodyG.selectAll("circle._" + i) //<-4E
+	                        .data(list)
+	                    .enter()
+	                    .append("circle")
+	                    .attr("class", "dot _" + i);
+	            _bodyG.selectAll("circle._" + i)
+	                    .data(list)                    
+	                    .style("stroke", function (d) { 
+	                        return _colors(i); //<-4F
+	                    })
+	                    .transition() //<-4G
+	                    .attr("cx", function (d) { return _x(d.x); })
+	                    .attr("cy", function (d) { return _y(d.y); })
+	                    .attr("r", 2);
+	        });
+	    }
+	    function xStart() {
+	        return _margins.left;
+	    }
+	    function yStart() {
+	        return _height - _margins.bottom;
+	    }
+	    function xEnd() {
+	        return _width - _margins.right;
+	    }
+	    function yEnd() {
+	        return _margins.top;
+	    }
+	    function quadrantWidth() {
+	        return _width - _margins.left - _margins.right;
+	    }
+	    function quadrantHeight() {
+	        return _height - _margins.top - _margins.bottom;
+	    }
+	    _chart.width = function (w) {
+	        if (!arguments.length) return _width;
+	        _width = w;
+	        return _chart;
+	    };
+	    _chart.height = function (h) { // <-1C
+	        if (!arguments.length) return _height;
+	        _height = h;
+	        return _chart;
+	    };
+	    _chart.margins = function (m) {
+	        if (!arguments.length) return _margins;
+	        _margins = m;
+	        return _chart;
+	    };
+	    _chart.colors = function (c) {
+	        if (!arguments.length) return _colors;
+	        _colors = c;
+	        return _chart;
+	    };
+	    _chart.x = function (x) {
+	        if (!arguments.length) return _x;
+	        _x = x;
+	        return _chart;
+	    };
+	    _chart.y = function (y) {
+	        if (!arguments.length) return _y;
+	        _y = y;
+	        return _chart;
+	    };
+	    _chart.addSeries = function (series) { // <-1D
+	        _data.push(series);
+	        return _chart;
+	    };
+	    return _chart; // <-1E
+	}
+
+	function randomData() {
+	    return Math.random() * 9;
+	}
+
+	function update() {
+	    for (var i = 0; i < data.length; ++i) {
+	        var series = data[i];
+	        series.length = 0;
+	        for (var j = 0; j < numberOfDataPoint; ++j)
+	            series.push({x: j, y: randomData()});
+	    }
+	    chart.render();
+	}
+	
+	var minTime = Number.POSITIVE_INFINITY;
+	var maxTime = Number.NEGATIVE_INFINITY;
+	var minValue = Number.POSITIVE_INFINITY;
+	var maxValue = Number.NEGATIVE_INFINITY;
+
+	var numberOfSeries;
+
+	return {
+
+		graph : function(lifeData, time, value, id) {
+			var data = [];
+			var time = time;
+			var value = value;
+			
+			minTime = Number.POSITIVE_INFINITY;
+			maxTime = Number.NEGATIVE_INFINITY;
+			minValue = Number.POSITIVE_INFINITY;
+			maxValue = Number.NEGATIVE_INFINITY;
+			lifeData.forEach(function(element, index, array) {
+				var element = element;
+				var length = element.length;
+
+				for (i=0;i<length;i++) {
+					var cur = element[i];
+					if (cur[time] < minTime) minTime = cur[time];
+					if (cur[time] > maxTime) maxTime = cur[time];
+					if (cur[value] < minValue) minValue = cur[value];
+					if (cur[value] > maxValue) maxValue = cur[value];
+				}
+			});
+
+			numberOfSeries = lifeData.length;
+
+			numberOfDataPoint = (function() {
+				var max = Math.max(lifeData[0].length, lifeData[1].length);
+				return max;
+			})();
+
+			for (var i = 0; i < numberOfSeries; i++) {
+
+				var curData = lifeData[i];
+					tmpTime = curData[i][time];
+					tmpSal = curData[i][value];
+
+				data.push(d3.range(curData.length).map(function(i) {
+					return {x : curData[i][time], y: curData[i][value] }	
+				}));
+			}		
+		
+			var chart = lineChart()
+		        .x(d3.scale.linear().domain([minTime, maxTime]))
+		        .y(d3.scale.linear().domain([minValue, maxValue]));
+			data.forEach(function(series) {
+				chart.addSeries(series);
+			});
+			
+			chart.render(id);
+		}
+
+	}
+
+})();
+</script>

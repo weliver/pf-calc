@@ -19,7 +19,13 @@ d3-bars{
   pointer-events: none;
 }
 
-
+.homebox {
+  display: inline-block;
+  float:left;
+}
+.homebox:nth-child(5){
+  clear:left;
+}
 
 
 /*.container {

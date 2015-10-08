@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Debt to Income Calc</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="/mu30style.css" media="all">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    </head>
+    <body style="margin: 0 10%">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="debtRatio">
+  <div id="mbc_full_form">
+    <form id="mu30gradCalc" name="mu30gradCalc">
+      <fieldset>
+        <legend>Calculate Your Debt-to-Income Ratio</legend>
+
+        <ol style="list-style: none;">
+          <li class="dollar"><label for="income">Gross monthly income</label>
+          <span class="dollar">$</span> <input class="calcEntry" id="income"
+          name="income" type="text" value="3000"></li>
+        </ol>
+        <legend></legend>
+
+        <ol style="list-style: none;">
+          <li class="dollar"><label for="studentLoan">Student loan
+          payment</label> <span class="dollar">$</span> <input class=
+          "calcEntry" id="studentLoan" name="studentLoan" type="text" value=
+          "150"></li>
+
+
+          <li class="dollar"><label for="autoPayment">Auto loan payment</label>
+          <span class="dollar">$</span> <input class="calcEntry" id=
+          "autoPayment" name="autoPayment" type="text" value="250"></li>
+
+
+          <li class="dollar"><label for="minCredit"><strong>Minimum</strong>
+          credit card payment</label> <span class="dollar">$</span>
+          <input class="calcEntry" id="minCredit" name="minCredit" type="text"
+          value="175"></li>
+
+
+          <li class="dollar"><label for="mortgagePayment">Mortgage
+          payment</label> <span class="dollar">$</span> <input class=
+          "calcEntry" id="mortgagePayment" name="mortgagePayment" type="text"
+          value="1100"></li>
+
+
+          <li class="dollar"><label for="otherDebt">Other monthly debt
+          payments</label> <span class="dollar">$</span> <input class=
+          "calcEntry" id="otherDebt" name="otherDebt" type="text" value=
+          "150"></li>
+        </ol>
+      </fieldset>
+
+
+      <fieldset class="buttons">
+        <input class="mortgage-btn" type="submit"
+        value="Calculate">
+      </fieldset>
+
+
+      <div id="formError" style=
+      "display: none; color: red; text-align: right; margin: 10px 10px 0px 0px;">
+      Please check your input.
+      </div>
+
+
+      <div class="output" style="display: none; margin-top: 15px;">
+        <h2>Debt-to-Income Ratio: <span id="outputRatio"></span></h2>
+
+
+        <div class="outputResponse" id="dtiLow" style="display: none;">
+          <h3>Great job!</h3>
+          Your debt-to-income ratio is at a sustainable level and gives you a
+          good amount of borrowing power. Your good DTI can help you get
+          approved for loans — and at lower rates.
+        </div>
+
+
+        <div class="outputResponse" id="dtiMed" style="display: none;">
+          <h3>OK, but be careful</h3>
+          Your DTI is at an OK level, but try not to let it get any higher. If
+          you add more debt or see your income go down, it may keep you from
+          getting approved for large loans, like a mortgage or a student loan
+          refinance.
+        </div>
+
+
+        <div class="outputResponse" id="dtiHigh" style="display: none;">
+          <h3>Caution</h3>
+          Your DTI is relatively high. This may prevent you from getting
+          approved for a mortgage or other large loan. Try to keep your DTI
+          below 33% — read <a href=
+          "http://www.moneyunder30.com/debt-to-income-ratio">here for help</a>.
+        </div>
+
+
+        <div class="outputResponse" id="dtiDanger" style="display: none;">
+          <h3>Warning: You probably have too much debt</h3>
+          Your DTI is very high. While your may have a handle on your current
+          debt, it's highly doubtful that any lender will approve you for more.
+          <a href="http://www.moneyunder30.com/debt-to-income-ratio">Read our
+          guide for lowering your DTI</a> before applying for any more loans or
+          credit.
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+				//returns ratio of debt and income fields
+				function debtRatio(debt, income, callback) {
+
+					var debt = debt;
+					var income = income;
+					var ratio = debt/income;
+					var cleanRatio = Math.round(ratio * 100)/100;
+
+					if (isNaN(cleanRatio) != true ) callback(cleanRatio);
+				}
+
+				//validates that fields are valid
+				function calcValidator(inputs, callback) {
+
+					var length = $(inputs).length;
+					var input = inputs;
+
+					for(var i=0; i<length; i++){ 						var val = $(input[i]).val(); 						if (parseInt(val) > -1) {
+							$(input[i]).removeClass('calcInvalid');
+							callback(true);
+						} else {
+							$(input[i]).addClass('calcInvalid');
+							callback(false);
+						}
+					}
+				}
+				function printOutput(ratio) {
+
+					var ratio = Math.floor(ratio * 100);
+					$('.outputResponse').hide();
+					if (ratio <= 15) {
+						$('#dtiLow').show();
+					} else if (ratio > 15 && ratio <=25) {
+					$('#dtiMed').show();
+					}else if (ratio >25 && ratio <=35) {
+					$('#dtiHigh').show();
+					} else if (ratio >35) {
+						$('#dtiDanger').show();
+					}
+
+					$('.output').show();
+					$('#outputRatio').text(ratio+'%');
+				}
+
+				//validates field if empty, changes entry to 0
+				$('.calcEntry').change(function(){
+					var val = $(this).val();
+					if (/^\s+$/.test(val)) {
+						$(this).val(0);
+					}
+				})
+				//event listener for submit
+				//triggers validation and calculation
+				$('#debtRatio').on('submit', function(e) {
+					e.preventDefault();
+
+					var income = $('#income').val();
+					var debtPayments = {
+						studentLoan : $('#studentLoan').val(),
+						autoPayment : $('#autoPayment').val(),
+						minCredit : $('#minCredit').val(),
+						mortgagePayment : $('#mortgagePayment').val(),
+						otherDebt : $('#otherDebt').val()
+					}
+					var debtTotal = 0;
+					var debt = (function(){
+						$.each(debtPayments, function(key, value) {
+							debtTotal += parseInt(value);
+						});
+					})();
+
+					var ratio;
+
+					var formError = $('#formError');
+					var inputs = $(this).find('.calcEntry');
+
+					calcValidator(inputs, function(res) {
+						console.log(res);
+						if (res === true) {
+							debtRatio(debtTotal, income, function(ratio) {
+								printOutput(ratio);
+								formError.hide();
+							});
+						} else {
+							$('.output').hide();
+							formError.show();
+						}
+					});
+				});
+
+			});
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>
