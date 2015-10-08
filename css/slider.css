@@ -9,11 +9,20 @@
 	box-shadow: 1px 2px 10px #888888;
 }
 .cs-slider-title{
+  box-sizing:border-box;
+
+  position:absolute;
+  top:0;
+  left: 0px;
+  padding: 10px;
+  background-color: white;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;  
+  border-bottom: 1px solid #efefef;
 	font-family: Georgia, serif;
 	font-size: 1.5em;
 	width: 100%;
 	text-align: center;
-	margin-bottom: 15px;
 }
 .cs-slider .slider {
 	width: 100%;
@@ -29,7 +38,7 @@
 	width: 100%;
 	font-size: 3em;
 	font-weight:bold;
-	margin: 25px 0px;
+	margin: 55px 0px 35px;
 }
 #cs-label-low{
 	position: absolute;
